@@ -1,64 +1,38 @@
-function setup(block)
+O1 = 3.1;
+O2 = 9.5;
+O3 = 0.24;
+O4 = 0.77;
+g = 9.81;
 
-% The Simulink engine passes an instance of the Simulink.MSFcnRunTimeBlock
-% class to the setup method in the input argument "block". This is known as
-% the S-function block's run-time object.
+Kp1 = 10000;
+Kp2 = 10000;
+Kd1 = Kp1/10;
+Kd2 = Kp2/10;
 
-% Register original number of input ports based on the S-function
-% parameter values
+T = 6;
 
-try % Wrap in a try/catch, in case no S-function parameters are entered
-    lowMode    = block.DialogPrm(1).Data;
-    upMode     = block.DialogPrm(3).Data;
-    numInPorts = 1 + isequal(lowMode,3) + isequal(upMode,3);
-catch
-    numInPorts=1;
-end % try/catch
-block.NumInputPorts = numInPorts;
-block.NumOutputPorts = 1;
+%sim('test2slx.slx', t);
+Simout = sim('test3.slx');
 
-% Setup port properties to be inherited or dynamic
-%block.SetPreCompInpPortInfoToDynamic;
-%block.SetPreCompOutPortInfoToDynamic;
+%time = ans.getElement('tout');
+figure(1)
+plot(Simout.tout, Simout.e1, Simout.tout, Simout.e2)
+title('Position error by time (Kp = 10000)')
+ylabel('m(?)')
+xlabel('s(?)')
+legend('e1','e2')
 
-% Override input port properties
-block.InputPort(1).DatatypeID  = 0;  % double
-block.InputPort(1).Complexity  = 'Real';
 
-% Override output port properties
-block.OutputPort(1).DatatypeID  = 0; % double
-block.OutputPort(1).Complexity  = 'Real';
+Kp1 = 100;
+Kp2 = 100;
+Kd1 = Kp1/10;
+Kd2 = Kp2/10;
 
-% Register parameters. In order:
-% -- If the upper bound is off (1) or on and set via a block parameter (2)
-%    or input signal (3)
-% -- The upper limit value. Should be empty if the upper limit is off or
-%    set via an input signal
-% -- If the lower bound is off (1) or on and set via a block parameter (2)
-%    or input signal (3)
-% -- The lower limit value. Should be empty if the lower limit is off or
-%    set via an input signal
-block.NumDialogPrms     = 4;
-block.DialogPrmsTunable = {'Nontunable','Tunable','Nontunable', ...
-    'Tunable'};
+Simout = sim('test3.slx');
 
-% Register continuous sample times [0 offset]
-block.SampleTimes = [0 0];
-
-%% -----------------------------------------------------------------
-%% Options
-%% -----------------------------------------------------------------
-% Specify if Accelerator should use TLC or call back into
-% MATLAB script
-%block.SetAccelRunOnTLC(false);
-
-%% -----------------------------------------------------------------
-%% Register methods called during update diagram/compilation
-%% -----------------------------------------------------------------
-
-%block.RegBlockMethod('CheckParameters',      @CheckPrms);
-%block.RegBlockMethod('ProcessParameters',    @ProcessPrms);
-%block.RegBlockMethod('PostPropagationSetup', @DoPostPropSetup);
-%block.RegBlockMethod('Outputs',              @Outputs);
-%block.RegBlockMethod('Terminate',            @Terminate);
-%end setup function
+figure(2)
+plot(Simout.tout, Simout.e1, Simout.tout, Simout.e2)
+title('Position error by time (Kp = 100)')
+ylabel('m(?)')
+xlabel('s(?)')
+legend('e1','e2')
