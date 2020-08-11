@@ -12,8 +12,8 @@ Kd1 = Kp1/10;
 
 T = 20;
 
-%Simout = sim('EDDA_2nd.slx');
-Simout = sim('test3.slx');
+Simout = sim('EDDA_2nd.slx');
+%Simout = sim('test3.slx');
 
 figure(1)
 plot(Simout.tout, Simout.e1, Simout.tout, Simout.e2)
@@ -25,7 +25,7 @@ legend('e1','e2')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
 
-Kp1 = 10;
+Kp1 = 1000;
 Kd1 = Kp1/10;
 
 Simout = sim('EDDA_2nd.slx');
