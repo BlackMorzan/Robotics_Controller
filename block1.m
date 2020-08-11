@@ -1,38 +1,42 @@
+clear all;
+close all;
+
 O1 = 3.1;
 O2 = 9.5;
 O3 = 0.24;
 O4 = 0.77;
 g = 9.81;
 
-Kp1 = 10000;
-Kp2 = 10000;
+Kp1 = 10;
 Kd1 = Kp1/10;
-Kd2 = Kp2/10;
 
-T = 6;
+T = 20;
 
-%sim('test2slx.slx', t);
+%Simout = sim('EDDA_2nd.slx');
 Simout = sim('test3.slx');
 
-%time = ans.getElement('tout');
 figure(1)
 plot(Simout.tout, Simout.e1, Simout.tout, Simout.e2)
-title('Position error by time (Kp = 10000)')
-ylabel('m(?)')
-xlabel('s(?)')
+
+title(['Position error by time Kp = ', num2str(Kp1)])
+ylabel('rad')
+xlabel('s')
 legend('e1','e2')
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
 
-Kp1 = 100;
-Kp2 = 100;
+Kp1 = 10;
 Kd1 = Kp1/10;
-Kd2 = Kp2/10;
 
-Simout = sim('test3.slx');
+Simout = sim('EDDA_2nd.slx');
+%Simout = sim('test3.slx');
 
 figure(2)
 plot(Simout.tout, Simout.e1, Simout.tout, Simout.e2)
-title('Position error by time (Kp = 100)')
-ylabel('m(?)')
-xlabel('s(?)')
+
+title(['Position error by time Kp = ', num2str(Kp1)])
+ylabel('rad')
+xlabel('s')
 legend('e1','e2')
+%}
+
