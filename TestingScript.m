@@ -1,4 +1,4 @@
-clear all;
+clear;
 close all;
 
 O1 = 3.1;
@@ -7,22 +7,22 @@ O3 = 0.24;
 O4 = 0.77;
 g = 9.81;
 
-Kp1 = 10;
+Kp1 = 1000;
 Kd1 = Kp1/10;
 %Kd1 = 1;
 
-T = 40;
+T = 50;
 
-%Simout = sim('EDDA_2nd.slx');
-Simout = sim('EDDA_linear2.slx');
+Simout = sim('EDDA_2nd.slx');
+%Simout = sim('EDDA_linear2.slx');
 %Simout = sim('test3.slx');
 
 figure(1)
 plot(Simout.tout, Simout.e1, Simout.tout, Simout.e2)
 
-title(['Position error by time Kp = ', num2str(Kp1)])
-ylabel('rad')
-xlabel('s')
+title(['Position error by time Kp = ', num2str(Kp1), ' Kd = ', num2str(Kd1)])
+ylabel('błąd[rad]')
+xlabel('czas[s]')
 legend('e1','e2')
 
 Timi = Simout.tout.';
